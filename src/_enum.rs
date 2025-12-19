@@ -1,6 +1,4 @@
 use core::fmt;
-use std::fmt::format;
-
 #[allow(dead_code)]
 
 // SUMMARY
@@ -23,7 +21,6 @@ use std::fmt::format;
 enum Status {
     Active,
     Inactive,
-    Suspended,
 }
 
 // IMPL
@@ -39,7 +36,6 @@ impl fmt::Display for Status {
         match self {
             Status::Active => write!(f, "active"),
             Status::Inactive => write!(f, "inactive"),
-            Status::Suspended => write!(f, "suspended"),
         }
     }
 }
@@ -117,15 +113,21 @@ mod test_enum {
     use crate::_enum::{LampStatus, LoginResult, OrderStatus, Status, UserStatus};
 
     #[test]
-    fn test_enum_one() {
-        let status = Status::Active;
-        println!("{}", status);
+    fn test_enum_status() {
+        let status_active = Status::Active;
+        println!("{}", status_active);
+
+        let status_inactive = Status::Inactive;
+        println!("{}", status_inactive);
     }
 
     #[test]
     fn test_enum_two() {
-        let lamp: LampStatus = LampStatus::On;
+        let mut lamp: LampStatus = LampStatus::On;
         assert_eq!(lamp.is_on(), true);
+
+        lamp = LampStatus::Off;
+        assert_eq!(lamp.is_on(), false);
 
         println!("{}", lamp)
     }
@@ -141,13 +143,22 @@ mod test_enum {
 
     #[test]
     fn test_order_status() {
-        let order_status = OrderStatus::Paid;
-        assert_eq!(order_status.can_ship(), true)
+        let mut order_status = OrderStatus::Paid;
+        assert_eq!(order_status.can_ship(), true);
+
+        order_status = OrderStatus::Created;
+        assert_eq!(order_status.can_ship(), false);
+
+        order_status = OrderStatus::Canceled;
+        assert_eq!(order_status.can_ship(), false);
     }
 
     #[test]
     fn test_user_status() {
         let user_status_active = UserStatus::Active;
         assert_eq!(user_status_active.login(), Ok(()));
+
+        let user_status_banned = UserStatus::Banned;
+        assert_eq!(user_status_banned.login(), Err("user banned".to_string()))
     }
 }
