@@ -89,6 +89,10 @@ fn handler_register_user(input: &str) -> Result<String, ApiError> {
     Ok(format!("user age: {}", age))
 }
 
+async fn hello() -> &'static str {
+    "hello"
+}
+
 #[cfg(test)]
 mod test_function {
     use super::*;
@@ -153,5 +157,11 @@ mod test_function {
             Ok(res) => println!("{}", res),
             Err(err) => println!("{:?}", err),
         }
+    }
+
+    #[tokio::test]
+    async fn test_hello_async() {
+        let res = hello().await;
+        assert_eq!(res, "hello");
     }
 }
