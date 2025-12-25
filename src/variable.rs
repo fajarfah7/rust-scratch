@@ -181,4 +181,28 @@ mod test_variable {
         x = append_value(x);
         println!("vector of x ==>{:?}", x);
     }
+
+    #[test]
+    fn test_some_option_variable() {
+        let x = Some("test".to_string());
+        match &x {
+            Some(y) => println!("{y}"),
+            None => {}
+        }
+        if let Some(z) = &x {
+            println!("z: {}", z)
+        }
+
+        let a: Option<String> = None;
+        match &a {
+            Some(b) => println!("{b}"),
+            None => {}
+        }
+        if let Some(c) = &a {
+            println!("c: {}", c)
+        }
+
+        // shadowing to set new value
+        // let a: Option<String> = Some("hello". to_string());
+    }
 }

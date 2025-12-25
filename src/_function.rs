@@ -93,6 +93,34 @@ async fn hello() -> &'static str {
     "hello"
 }
 
+#[derive(Debug)]
+struct OneTwo{
+    opt: Option<String>,
+}
+fn my_fn_one(m: &OneTwo) {
+    println!("one: {:?}", m);
+    let bag = &m.opt;
+    let mut content = match bag {
+        Some(v) => {
+            println!("one_bag: {}", v);
+            v
+        }
+        None => {
+            println!("one_bag: empty");
+            &"empty".to_string()
+        }
+    };
+    println!("content_1: {}", content);
+    let content = "new string".to_string(); // actually this is shadowing
+    println!("content_2: {}", content);
+    my_fn_two(m);
+}
+fn my_fn_two(m: &OneTwo) {
+    if let Some(v) = &m.opt {
+        println!("two_value: {}", v)
+    }
+}
+
 #[cfg(test)]
 mod test_function {
     use super::*;
@@ -163,5 +191,14 @@ mod test_function {
     async fn test_hello_async() {
         let res = hello().await;
         assert_eq!(res, "hello");
+    }
+
+    #[test]
+    fn test_one_two() {
+        let opt: Option<String> = Some("hello".into());
+        let str_one_two: OneTwo = OneTwo {
+            opt,
+        };
+        my_fn_one(&str_one_two);
     }
 }

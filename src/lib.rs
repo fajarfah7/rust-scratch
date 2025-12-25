@@ -7,3 +7,5 @@ pub mod _error;
 pub mod _json;
 pub mod _env;
 pub mod _api_minim;
+pub mod _future;
+pub mod _lifetime;
