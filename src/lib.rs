@@ -9,3 +9,6 @@ pub mod _env;
 pub mod _api_minim;
 pub mod _future;
 pub mod _lifetime;
+pub mod _text;
+pub mod _box_rc_arc;
+pub mod _arc;

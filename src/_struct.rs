@@ -52,4 +52,36 @@ mod test_struct {
 
         println!("{:?}", mut_user);
     }
+
+    #[test]
+    fn test_struct_tuple() {
+        struct Point(f64, f64, f64);
+
+        let p: Point = Point(0.2, 0.4, 0.3);
+        println!("X: {}", p.0);
+        println!("Y: {}", p.1);
+        println!("Z: {}", p.2);
+    }
+
+    #[test]
+    fn test_struct_generic() {
+        struct Const<T> {
+            value: T,
+        }
+
+        impl<T> Const<T> {
+            fn set(value: T) -> Self {
+                Self { value }
+            }
+            fn get(&self) -> &T {
+                &self.value
+            }
+        }
+
+        let phi = Const::<f64>::set(3.14);
+        println!("Phi: {}", phi.get());
+
+        let g = Const::<f64>::set(9.8);
+        println!("G: {}", g.get());
+    }
 }
